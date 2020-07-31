@@ -1,4 +1,10 @@
-# React教程：概述和演练 (React Tutorial: An Overview and Walkthrough)
+# 这是我的个人博客
 
-[参考文档](https://www.taniarascia.com/getting-started-with-react/)
+[预览地址](https://lemon19930205.github.io/blog/)
 
+
+#### 发布部署
+
+```
+npm run deploy
+```
