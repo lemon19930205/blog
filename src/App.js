@@ -5,7 +5,12 @@ import Home from './views/Home'
 import Resume from './views/Resume'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    console.log(this)
+  }
   render() {
+    console.log(222)
     return (
       <div className="App">
         老周的博客
@@ -27,11 +32,9 @@ class AppRouter extends Component {
   render() {
     return (
       <Router>
-        <App/>
-        <Route path="/" component={App}>
-          <Route path="home" component={Home} />
-          <Route path="resume" component={Resume} />
-        </Route>
+        <Route path="/" component={App} />
+        <Route path="/home" component={Home} />
+        <Route path="/resume" component={Resume} />
       </Router>
     )
   }
