@@ -4,7 +4,7 @@ export default class Resume extends Component {
   render() {
     return (
       <div>
-        Resume
+        我的简历
       </div>
     )
   }

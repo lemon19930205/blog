@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-
 import echarts from 'echarts'
 
+import $style from './index.module.scss'
+
 export default class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
   componentDidMount() {
     // 基于准备好的dom，初始化echarts实例
-    let myChart = echarts.init(document.getElementById('main'))
+    let myChart = echarts.init(document.getElementById('calender'))
     var layouts = [
       [[0, 0]],
       [
@@ -74,7 +79,7 @@ export default class Home extends Component {
             return {
               type: 'path',
               shape: {
-                pathData: pathes[events[index]],
+                //pathData: pathes[events[index]],
                 x: -8,
                 y: -8,
                 width: 16,
@@ -146,11 +151,27 @@ export default class Home extends Component {
     }
     myChart.setOption(option)
   }
+
+  pushResume = (e) => {
+    if (e.nativeEvent.keyCode === 13) {
+      console.log(e.target.value);
+      if(e.target.value == 12138) {
+        this.props.history.push('/resume')
+      }
+    }
+  }
+
   render() {
     return (
-      <div>
-        Home
-        <div id="main" style={{ width: 500, height: 400 }}></div>
+      <div className={$style.page}>
+        <div className={$style.content}>
+          <div id="calender" className={$style.calender} />
+          <input
+            type="text"
+            className={$style.input}
+            onKeyPress={(e) => this.pushResume(e)}
+          />
+        </div>
       </div>
     )
   }
