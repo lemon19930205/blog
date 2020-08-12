@@ -11,7 +11,7 @@ export default class Home extends Component {
   componentDidMount() {
     // 基于准备好的dom，初始化echarts实例
     let myChart = echarts.init(document.getElementById('calender'))
-    var layouts = [
+    /* var layouts = [
       [[0, 0]],
       [
         [-0.25, 0],
@@ -55,9 +55,9 @@ export default class Home extends Component {
         ])
       }
       return data
-    }
+    } */
 
-    function renderItem(params, api) {
+    /* function renderItem(params, api) {
       var cellPoint = api.coord(api.value(0))
       var cellWidth = params.coordSys.cellWidth
       var cellHeight = params.coordSys.cellHeight
@@ -118,15 +118,33 @@ export default class Home extends Component {
       })
 
       return group
-    }
+    } */
 
-    let option = {
-      tooltip: {},
+    const date = new Date()
+    const dateData = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      date: date.getDate(),
+    }
+    console.log(dateData);
+    const sum = new Date(dateData.month)
+    const data = [];
+    /* for (let i = 0; i < dateData; i++) {
+      const element = array[i];
+      
+    } */
+
+    myChart.setOption({
+      title: {
+        top: 30,
+        left: 'center',
+        text: dateData.year + '年' + dateData.month + '月',
+      },
       calendar: [
         {
           left: 'center',
           top: 'middle',
-          cellSize: [70, 70],
+          cellSize: [50, 50],
           yearLabel: { show: false },
           orient: 'vertical',
           dayLabel: {
@@ -136,26 +154,25 @@ export default class Home extends Component {
           monthLabel: {
             show: false,
           },
-          range: '2017-03',
+          range: dateData.year + '-' + dateData.month,
         },
       ],
-      series: [
+      /* series: [
         {
-          type: 'custom',
-          coordinateSystem: 'calendar',
-          renderItem: renderItem,
-          dimensions: [null, { type: 'ordinal' }],
-          data: getVirtulData(2017),
+          type: 'heatmap',
+          data: [1],
+          label: {
+            show: true,
+          },
         },
-      ],
-    }
-    myChart.setOption(option)
+      ], */
+    })
   }
 
   pushResume = (e) => {
     if (e.nativeEvent.keyCode === 13) {
-      console.log(e.target.value);
-      if(e.target.value === '12138') {
+      console.log(e.target.value)
+      if (e.target.value === '12138') {
         this.props.history.push('/resume')
       }
     }
