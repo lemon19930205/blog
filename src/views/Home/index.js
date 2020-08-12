@@ -155,7 +155,7 @@ export default class Home extends Component {
   pushResume = (e) => {
     if (e.nativeEvent.keyCode === 13) {
       console.log(e.target.value);
-      if(e.target.value == 12138) {
+      if(e.target.value === '12138') {
         this.props.history.push('/resume')
       }
     }
