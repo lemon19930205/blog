@@ -126,14 +126,14 @@ export default class Home extends Component {
       month: date.getMonth() + 1,
       date: date.getDate(),
     }
-    console.log(dateData);
-    const sum = new Date(dateData.month)
-    const data = [];
-    /* for (let i = 0; i < dateData; i++) {
-      const element = array[i];
-      
-    } */
 
+    const sum = new Date(dateData.month)
+    const data = []
+    for (let i = 1; i <= 31; i++) {
+      data.push([`${dateData.year}-${dateData.month}-${i}`,i])
+    }
+
+    //console.log(dateData, data)
     myChart.setOption({
       title: {
         top: 30,
@@ -157,15 +157,39 @@ export default class Home extends Component {
           range: dateData.year + '-' + dateData.month,
         },
       ],
-      /* series: [
+      series: [
         {
-          type: 'heatmap',
-          data: [1],
+          type: 'scatter',
+          coordinateSystem: 'calendar',
+          symbolSize: 1,
           label: {
             show: true,
+            formatter: function (params) {
+              console.log(params);
+              var d = echarts.number.parseDate(params.value[0])
+              //return d.getDate() + '\n\n' + params.value[1] + '\n\n'
+              return d.getDate()
+            },
+            color: '#000',
           },
+          data: data,
         },
-      ], */
+        /* {
+          type: 'scatter',
+          coordinateSystem: 'calendar',
+          symbolSize: 1,
+          label: {
+            show: true,
+            formatter: function (params) {
+              return '\n\n\n' + (params.value[2] || '')
+            },
+            fontSize: 14,
+            fontWeight: 700,
+            color: '#a00',
+          },
+          data: data,
+        }, */
+      ],
     })
   }
 
