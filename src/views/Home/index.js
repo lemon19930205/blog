@@ -10,13 +10,12 @@ export default class Home extends Component {
     super(props)
     this.state = {
       bg: {},
+      timer: null,
     }
   }
   componentDidMount() {
     this.initCalender()
-
     this.bgSwitch()
-    setInterval(() => this.bgSwitch(), 10000)
   }
 
   // 初始化日历 echarts
@@ -82,7 +81,7 @@ export default class Home extends Component {
   }
 
   // 跳转简历页
-  pushResume(e) {
+  pushResume = (e) => {
     if (e.nativeEvent.keyCode === 13) {
       if (e.target.value === '12138') {
         this.props.history.push('/resume')
@@ -92,8 +91,16 @@ export default class Home extends Component {
 
   // 背景切换
   bgSwitch = () => {
+    const bgChange = () => {
+      this.setState({
+        bg: bgList[Math.ceil(Math.random() * bgList.length)],
+      })
+    }
+    bgChange()
+
+    clearInterval(this.state.timer)
     this.setState({
-      bg: bgList[Math.ceil(Math.random() * bgList.length)],
+      timer: setInterval(bgChange, 10000),
     })
   }
 
@@ -113,7 +120,7 @@ export default class Home extends Component {
           <input
             type="text"
             className={$style.input}
-            onKeyPress={(e) => this.pushResume(e)}
+            onKeyPress={this.pushResume}
           />
         </div>
       </div>
