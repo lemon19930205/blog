@@ -11,6 +11,10 @@ export default class Home extends Component {
     this.state = {
       bg: {},
       timer: null,
+      flag: {
+        con: null,
+        times: 0,
+      },
     }
   }
   componentDidMount() {
@@ -37,20 +41,22 @@ export default class Home extends Component {
     }
 
     //console.log(dateData, data)
-    myChart.setOption({
+    const option = {
+      backgroundColor:'rgba(255, 255, 255, 0)',
       title: {
-        top: 30,
+        top: 0,
         left: 'center',
         text: dateData.year + '年' + dateData.month + '月',
       },
       calendar: [
         {
           left: 'center',
-          top: 'middle',
-          cellSize: [50, 50],
+          top: 120,
+          cellSize: [80, 80],
           yearLabel: { show: false },
           orient: 'vertical',
           dayLabel: {
+            top: 0,
             firstDay: 1,
             nameMap: 'cn',
           },
@@ -60,8 +66,13 @@ export default class Home extends Component {
           range: dateData.year + '-' + dateData.month,
         },
       ],
+      visualMap: {
+        show: false,
+        color: ['#fff'],
+      },
       series: [
         {
+          name: '日历',
           type: 'scatter',
           coordinateSystem: 'calendar',
           symbolSize: 1,
@@ -76,17 +87,42 @@ export default class Home extends Component {
           },
           data: data,
         },
+        {
+          name: '降雨量',
+          type: 'heatmap',
+          coordinateSystem: 'calendar',
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+          data: data,
+        },
       ],
+    }
+
+    myChart.setOption(option)
+
+    myChart.on('click', (params) => {
+      const data = params.data[1]
+      let { con, times } = this.state.flag
+      if (times === 10 && data === 1) {
+        this.pushResume()
+      } else {
+        this.setState({
+          flag: {
+            con: data,
+            times: con === data ? ++times : 0,
+          },
+        })
+      }
     })
   }
 
   // 跳转简历页
   pushResume = (e) => {
-    if (e.nativeEvent.keyCode === 13) {
-      if (e.target.value === '12138') {
-        this.props.history.push('/resume')
-      }
-    }
+    this.props.history.push('/resume')
   }
 
   // 背景切换
@@ -117,11 +153,6 @@ export default class Home extends Component {
         </div>
         <div className={$style.content}>
           <div id="calender" className={$style.calender} />
-          <input
-            type="text"
-            className={$style.input}
-            onKeyPress={this.pushResume}
-          />
         </div>
       </div>
     )
