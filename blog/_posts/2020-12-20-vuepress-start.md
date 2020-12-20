@@ -11,7 +11,16 @@ tags:
 
 > 记录我的学习心得和人生感悟
 
-### 博客搭建
+### 搭建
 
 - vuepress
 - @vuepress/theme-blog
+
+### 部署
+
+```npm
+// 打包
+yarn build
+// 发布
+yarn deploy
+```
